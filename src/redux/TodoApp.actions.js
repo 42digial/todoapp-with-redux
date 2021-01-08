@@ -5,8 +5,9 @@ let nextTodoId = 0;
 export const addTodo = (content) => ({
 	type: ADD_TODO,
 	payload: {
-		id: ++nextTodoId,
-		content,
+		id: content.id,
+		content: content.name,
+		description: content.description,
 	},
 });
 

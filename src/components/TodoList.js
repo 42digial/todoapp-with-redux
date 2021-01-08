@@ -6,10 +6,9 @@ import shape from "../assets/img/shape.png";
 import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 // import { getTodos } from "../redux/selectors";
-import { getTodosByVisibilityFilter } from "../containers/TodoApp.selectors";
+import { getTodosByVisibilityFilter } from "../redux/TodoApp.selectors";
 
 const TodoList = ({ todos }) => {
-	console.log("Todos", todos);
 	return (
 		<div className="container">
 			<span className="big-circle"></span>
@@ -22,10 +21,12 @@ const TodoList = ({ todos }) => {
 			<div className="form">
 				<div className="contact-info">
 					<h3 className="title">To Do List</h3>
-					<p className="text">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-						dolorum adipisci recusandae praesentium dicta!
-					</p>
+					<div className="filter">
+						<button className="btn">Hoje</button>
+						<button className="btn">Amanha</button>
+						<button className="btn active">Todos</button>
+					</div>
+
 					<div className="info">
 						<LineGradientSvg />
 						<div className="todo-list">

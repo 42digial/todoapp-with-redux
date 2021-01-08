@@ -132,6 +132,15 @@ textarea.input {
 	transition: 0.3s;
 	margin: 0;
 }
+.filter > .btn {
+	margin-left: 10px;
+}
+.filter > .btn:hover,
+.filter > .active {
+	background-color: #1abc9c;
+	font-weight: bold;
+	color: #fff;
+}
 
 .btn:hover {
 	background-color: transparent;

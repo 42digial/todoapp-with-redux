@@ -5,6 +5,11 @@ export const getTodosState = (store) => store.todos;
 export const getTodoList = (store) =>
 	getTodosState(store) ? getTodosState(store).allIds : [];
 
+export const nextTodoId = (store) => {
+	const maxId = store.length === 0 ? 0 : Math.max(...store) + 1;
+	return maxId;
+};
+
 export const getTodoById = (store, id) =>
 	getTodosState(store) ? { ...getTodosState(store).byIds[id], id } : {};
 
