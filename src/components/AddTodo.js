@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { addTodo } from "../redux/TodoApp.actions";
 import { nextTodoId } from "../redux/TodoApp.selectors";
+import { db } from "../firebase";
+import firebase from "firebase";
 class AddTodo extends React.Component {
 	constructor(props) {
 		super(props);
@@ -10,10 +12,18 @@ class AddTodo extends React.Component {
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-
-	// updateInput = (input) => {
-	// 	this.setState({ input });
-	// };
+	componentDidMount() {
+		db.collection("todos")
+			.orderBy("timestamp", "desc")
+			.onSnapshot((snapshot) =>
+				this.setState(
+					snapshot.docs.map((doc) => ({
+						id: doc.id,
+						data: doc.data(),
+					}))
+				)
+			);
+	}
 
 	handleInputChange(event) {
 		const target = event.target;
@@ -27,6 +37,14 @@ class AddTodo extends React.Component {
 	handleSubmit(event) {
 		event.preventDefault();
 
+		// firebase
+		db.collection("todos").add({
+			name: "Edvan Lima",
+			description: "this is a test",
+			message: "",
+			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+		});
+
 		const { text, description } = this.state;
 		const id = this.props.todoId;
 		const newTodo = { id: id, name: text, description: description };
@@ -35,13 +53,8 @@ class AddTodo extends React.Component {
 		this.setState({ text: "", description: "" });
 	}
 
-	// handleAddTodo = (e) => {
-	// 	e.preventDefault();
-	// 	this.props.addTodo(this.state.input);
-	// 	this.setState({ text: "" });
-	// };
-
 	render() {
+		console.log("firebase", this.state);
 		return (
 			<>
 				<span className="circle one"></span>
@@ -79,8 +92,6 @@ class AddTodo extends React.Component {
 
 const mapStateToProps = (state) => {
 	const todoId = nextTodoId(state.todos.allIds);
-	console.log("allIds", state.todos.allIds);
-	console.log("Ids", todoId);
 	return { todoId };
 	//   const allTodos = getTodos(state);
 	//   return {
